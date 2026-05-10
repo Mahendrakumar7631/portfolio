@@ -177,28 +177,192 @@ const counterObserver = new IntersectionObserver((entries) => {
 const statsSection = document.querySelector('.about-stats');
 if (statsSection) counterObserver.observe(statsSection);
 
-/* ===== Contact Form ===== */
-contactForm.addEventListener('submit', (e) => {
+/* ===== Contact Form with Formspree + Validation ===== */
+const toastOverlay = document.getElementById('toastOverlay');
+const toastCloseBtn = document.getElementById('toastCloseBtn');
+
+// Validation helpers
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showError(inputEl, errorEl, message) {
+  inputEl.classList.add('input-error');
+  inputEl.classList.remove('input-success');
+  errorEl.textContent = message;
+  errorEl.classList.add('visible');
+}
+
+function clearError(inputEl, errorEl) {
+  inputEl.classList.remove('input-error');
+  errorEl.textContent = '';
+  errorEl.classList.remove('visible');
+}
+
+function markSuccess(inputEl) {
+  inputEl.classList.remove('input-error');
+  inputEl.classList.add('input-success');
+}
+
+function validateForm() {
+  const name = document.getElementById('formName');
+  const email = document.getElementById('formEmail');
+  const message = document.getElementById('formMessage');
+  const nameErr = document.getElementById('nameError');
+  const emailErr = document.getElementById('emailError');
+  const msgErr = document.getElementById('messageError');
+  let isValid = true;
+
+  // Name validation
+  if (!name.value.trim()) {
+    showError(name, nameErr, 'Please enter your name');
+    isValid = false;
+  } else if (name.value.trim().length < 2) {
+    showError(name, nameErr, 'Name must be at least 2 characters');
+    isValid = false;
+  } else {
+    clearError(name, nameErr);
+    markSuccess(name);
+  }
+
+  // Email validation
+  if (!email.value.trim()) {
+    showError(email, emailErr, 'Please enter your email address');
+    isValid = false;
+  } else if (!isValidEmail(email.value.trim())) {
+    showError(email, emailErr, 'Please enter a valid email address');
+    isValid = false;
+  } else {
+    clearError(email, emailErr);
+    markSuccess(email);
+  }
+
+  // Message validation
+  if (!message.value.trim()) {
+    showError(message, msgErr, 'Please enter your message');
+    isValid = false;
+  } else if (message.value.trim().length < 10) {
+    showError(message, msgErr, 'Message must be at least 10 characters');
+    isValid = false;
+  } else {
+    clearError(message, msgErr);
+    markSuccess(message);
+  }
+
+  return isValid;
+}
+
+// Real-time validation on blur
+['formName', 'formEmail', 'formMessage'].forEach(id => {
+  const el = document.getElementById(id);
+  const errEl = document.getElementById(id.replace('form', '').toLowerCase() + 'Error');
+  if (!el || !errEl) return;
+
+  el.addEventListener('blur', () => {
+    if (id === 'formName') {
+      if (!el.value.trim()) showError(el, errEl, 'Please enter your name');
+      else if (el.value.trim().length < 2) showError(el, errEl, 'Name must be at least 2 characters');
+      else { clearError(el, errEl); markSuccess(el); }
+    }
+    if (id === 'formEmail') {
+      if (!el.value.trim()) showError(el, errEl, 'Please enter your email address');
+      else if (!isValidEmail(el.value.trim())) showError(el, errEl, 'Please enter a valid email address');
+      else { clearError(el, errEl); markSuccess(el); }
+    }
+    if (id === 'formMessage') {
+      if (!el.value.trim()) showError(el, errEl, 'Please enter your message');
+      else if (el.value.trim().length < 10) showError(el, errEl, 'Message must be at least 10 characters');
+      else { clearError(el, errEl); markSuccess(el); }
+    }
+  });
+
+  // Clear error on input
+  el.addEventListener('input', () => {
+    if (el.classList.contains('input-error')) {
+      clearError(el, errEl);
+    }
+  });
+});
+
+// Form submit
+contactForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const btn = document.getElementById('submitBtn');
-  const originalText = btn.innerHTML;
+  if (!validateForm()) return;
 
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+  const btn = document.getElementById('submitBtn');
+  const btnText = btn.querySelector('.btn-text');
+
+  // Set loading state
+  btn.classList.add('loading');
   btn.disabled = true;
 
-  // Simulate sending
-  setTimeout(() => {
-    btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-    btn.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
+  try {
+    const formData = new FormData(contactForm);
+
+    const response = await fetch(contactForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      // Success state
+      btn.classList.remove('loading');
+      btn.classList.add('success');
+      btnText.textContent = 'Sent!';
+
+      // Show success toast popup
+      toastOverlay.classList.add('visible');
+
+      // Reset form after a delay
+      setTimeout(() => {
+        contactForm.reset();
+        btn.classList.remove('success');
+        btnText.textContent = 'Send Message';
+        btn.disabled = false;
+
+        // Remove success borders
+        document.querySelectorAll('.form-input').forEach(inp => {
+          inp.classList.remove('input-success');
+        });
+      }, 3000);
+    } else {
+      throw new Error('Form submission failed');
+    }
+  } catch (error) {
+    // Error state
+    btn.classList.remove('loading');
+    btnText.textContent = 'Failed to send';
+    btn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+    btn.style.boxShadow = '0 4px 20px rgba(231,76,60,0.4)';
 
     setTimeout(() => {
-      btn.innerHTML = originalText;
+      btnText.textContent = 'Send Message';
       btn.style.background = '';
+      btn.style.boxShadow = '';
       btn.disabled = false;
-      contactForm.reset();
-    }, 2500);
-  }, 1500);
+    }, 3000);
+  }
+});
+
+// Close toast popup
+toastCloseBtn.addEventListener('click', () => {
+  toastOverlay.classList.remove('visible');
+});
+
+// Close toast on overlay click
+toastOverlay.addEventListener('click', (e) => {
+  if (e.target === toastOverlay) {
+    toastOverlay.classList.remove('visible');
+  }
+});
+
+// Close toast on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && toastOverlay.classList.contains('visible')) {
+    toastOverlay.classList.remove('visible');
+  }
 });
 
 /* ===== Footer Year ===== */
@@ -214,3 +378,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+

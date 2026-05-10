@@ -321,28 +321,68 @@
             </div>
             <div class="certifications-grid">
                 <div class="cert-card animate-on-scroll">
-                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
-                    <h4 class="cert-title">Basics of Python</h4>
-                    <p class="cert-org">Athena Global Education UK</p>
-                    <p class="cert-detail">Score: 84/100 · Sep 2023</p>
+                    <div class="cert-image">
+                        <img src="https://drive.google.com/thumbnail?id=1IF6rfQgjHptohU18IDpb749jrqCuCz6h&sz=w800" alt="Basics of Python Certificate" loading="lazy">
+                        <div class="cert-overlay">
+                            <a href="https://drive.google.com/file/d/1IF6rfQgjHptohU18IDpb749jrqCuCz6h/view" target="_blank" rel="noopener" class="cert-view-btn">
+                                <i class="fas fa-external-link-alt"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h4 class="cert-title">Basics of Python</h4>
+                        <p class="cert-org">Athena Global Education UK</p>
+                        <p class="cert-detail">Score: 84/100 · Sep 2024</p>
+                    </div>
                 </div>
                 <div class="cert-card animate-on-scroll">
-                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
-                    <h4 class="cert-title">Intro to Artificial Intelligence</h4>
-                    <p class="cert-org">Devtown</p>
-                    <p class="cert-detail">Apr 2024</p>
+                    <div class="cert-image">
+                        <img src="https://drive.google.com/thumbnail?id=1lPO7dMmD2ytLJCqy3Nm6-jndu_uwHEgz&sz=w800" alt="Intro to AI Certificate" loading="lazy">
+                        <div class="cert-overlay">
+                            <a href="https://drive.google.com/file/d/1lPO7dMmD2ytLJCqy3Nm6-jndu_uwHEgz/view" target="_blank" rel="noopener" class="cert-view-btn">
+                                <i class="fas fa-external-link-alt"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h4 class="cert-title">Intro to Artificial Intelligence</h4>
+                        <p class="cert-org">Devtown</p>
+                        <p class="cert-detail">May 2024</p>
+                    </div>
                 </div>
                 <div class="cert-card animate-on-scroll">
-                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
-                    <h4 class="cert-title">Full Stack Development</h4>
-                    <p class="cert-org">7-Days Workshop · Devtown</p>
-                    <p class="cert-detail">June 2024</p>
+                    <div class="cert-image">
+                        <img src="https://drive.google.com/thumbnail?id=1KccL4jDRUUwG8MqeNZ0u_DiPcYTogzAV&sz=w800" alt="Full Stack Development Certificate" loading="lazy">
+                        <div class="cert-overlay">
+                            <a href="https://drive.google.com/file/d/1KccL4jDRUUwG8MqeNZ0u_DiPcYTogzAV/view" target="_blank" rel="noopener" class="cert-view-btn">
+                                <i class="fas fa-external-link-alt"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h4 class="cert-title">Full Stack Development</h4>
+                        <p class="cert-org">7-Days Workshop · Devtown</p>
+                        <p class="cert-detail">June 2024</p>
+                    </div>
                 </div>
                 <div class="cert-card animate-on-scroll">
-                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
-                    <h4 class="cert-title">Frontend Developer Internship</h4>
-                    <p class="cert-org">ProDesk IT & Engineering Services</p>
-                    <p class="cert-detail">June 2025</p>
+                    <div class="cert-image">
+                        <img src="https://drive.google.com/thumbnail?id=1VNBYic189Hc7fuLiwEWmcTnXZ8NG9oKt&sz=w800" alt="Frontend Developer Internship Certificate" loading="lazy">
+                        <div class="cert-overlay">
+                            <a href="https://drive.google.com/file/d/1VNBYic189Hc7fuLiwEWmcTnXZ8NG9oKt/view" target="_blank" rel="noopener" class="cert-view-btn">
+                                <i class="fas fa-external-link-alt"></i> View Certificate
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                        <h4 class="cert-title">Frontend Developer Internship</h4>
+                        <p class="cert-org">ProDesk IT & Engineering Services</p>
+                        <p class="cert-detail">June 2025</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -495,30 +535,38 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form animate-on-scroll" id="contactForm">
+                <form class="contact-form animate-on-scroll" id="contactForm" action="https://formspree.io/f/mqengdey" method="POST">
                     <div class="form-group">
-                        <input type="text" id="formName" class="form-input" placeholder=" " required>
+                        <input type="text" id="formName" name="name" class="form-input" placeholder=" " required minlength="2">
                         <label for="formName" class="form-label">Your Name</label>
                         <span class="form-highlight"></span>
+                        <span class="form-error" id="nameError"></span>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="formEmail" class="form-input" placeholder=" " required>
+                        <input type="email" id="formEmail" name="email" class="form-input" placeholder=" " required>
                         <label for="formEmail" class="form-label">Your Email</label>
                         <span class="form-highlight"></span>
+                        <span class="form-error" id="emailError"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="formSubject" class="form-input" placeholder=" ">
+                        <input type="text" id="formSubject" name="_subject" class="form-input" placeholder=" ">
                         <label for="formSubject" class="form-label">Subject</label>
                         <span class="form-highlight"></span>
                     </div>
                     <div class="form-group">
-                        <textarea id="formMessage" class="form-input form-textarea" placeholder=" " required rows="5"></textarea>
+                        <textarea id="formMessage" name="message" class="form-input form-textarea" placeholder=" " required minlength="10" rows="5"></textarea>
                         <label for="formMessage" class="form-label">Your Message</label>
                         <span class="form-highlight"></span>
+                        <span class="form-error" id="messageError"></span>
                     </div>
                     <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
                         <span class="btn-text">Send Message</span>
-                        <i class="fas fa-paper-plane"></i>
+                        <i class="fas fa-paper-plane btn-icon-plane"></i>
+                        <span class="btn-loader">
+                            <span class="loader-dot"></span>
+                            <span class="loader-dot"></span>
+                            <span class="loader-dot"></span>
+                        </span>
                     </button>
                 </form>
             </div>
@@ -565,6 +613,24 @@
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Success Toast Popup -->
+    <div class="toast-overlay" id="toastOverlay">
+        <div class="toast-popup" id="toastPopup">
+            <div class="toast-icon-wrapper">
+                <div class="toast-icon-circle">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="toast-icon-ring"></div>
+            </div>
+            <h3 class="toast-title">Message Sent!</h3>
+            <p class="toast-message">Thank you for reaching out. I'll get back to you as soon as possible.</p>
+            <button class="toast-close-btn" id="toastCloseBtn">
+                <span>Got it</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
